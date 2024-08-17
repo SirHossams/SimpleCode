@@ -1,0 +1,39 @@
+#include <iostream>
+
+using namespace std;
+
+
+int segment(int x,int A[],int degree)
+{
+	int sed=pow(10.0,degree),i=0;
+	while(x>=sed)
+	{
+		int mod=x%sed;
+		A[i]=mod;
+		x-=mod;
+		x/=sed;
+		i++;
+	}
+	A[i]=x;
+	return i+1;
+}
+
+void display(int x,int A[],int degree)
+{
+	int y=segment(x,A,degree)-1;
+	for (int i=y;i>=0;i--) {
+		cout << A[i];
+		if (i!=0)
+			cout << " | ";
+	}
+	cout << endl;
+}
+
+int main()
+{
+	int x,A[20],deg;
+	cin >> x >> deg;
+	display(x,A,deg);
+	system("pause");
+	return 0;
+}
