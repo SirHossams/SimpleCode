@@ -1,0 +1,106 @@
+#include <iostream>
+
+using namespace std;
+
+int get_digit_value(int x,int dig)
+{
+	dig--;
+	int A[100],i=0;
+	while(x>=10)
+	{
+		int mod=x%10;
+		A[i]=mod;
+		x-=mod;
+		x/=10;
+		i++;
+	}
+	A[i]=x;
+	if (dig>i) {
+		cout << "Error" << endl;
+		return 0;
+	}
+	else
+	return A[dig];
+}
+
+int last_digit(int x)//complexity is O(n)
+{
+	int A[100],i=0;
+	while(x>=10)
+	{
+		int mod=x%10;
+		A[i]=mod;
+		x-=mod;
+		x/=10;
+		i++;
+	}
+	A[i]=x;
+	return i+1;
+}
+
+int last_digit_value(int x)
+{
+	int A[100],i=0;
+	while(x>10)
+	{
+		int mod=x%10;
+		A[i]=mod;
+		x-=mod;
+		x/=10;
+		i++;
+	}
+	A[i]=x;
+	return A[i];
+}
+
+void segment(int A[],int x)
+{
+	//insert a number and put every digit value in a lone box
+	int lastdig=last_digit(x);
+	for (int i=1;i<=lastdig;i++)
+		A[i-1]=get_digit_value(x,i);
+	for (int i=lastdig;i<lastdig+4;i++)
+		A[i]=0;
+}
+
+void display_segment(int A[],int x)
+{
+	int s=last_digit(x);
+	for (int i=s-1;i>=0;i--) {
+		cout << A[i];
+		if (i!=0) cout << " | ";
+	}
+	cout << endl;
+}
+
+void add_in(int C[],int x,int y)
+{
+	int A[20],B[20];
+	segment(A,x);
+	segment(B,y);
+	int m=last_digit(max(x,y))-1;
+	for (int i=0;i<=m;i++) {
+		C[i]=A[i]+B[i];
+		C[i+1]=0;
+		if (C[i]>9) {
+			C[i]%=10;
+			A[i+1]++;
+		}
+	}
+	if (A[m+1]!=0)
+		cout << A[m+1];
+	for (int i=m;i>=0;i--) {
+		cout << C[i];
+	}
+	cout << endl;
+}
+
+int main()
+{
+	int x,y;
+	cin >> x >> y;
+	int C[20];
+	add_in(C,x,y);
+	system("pause");
+	return 0;
+}
